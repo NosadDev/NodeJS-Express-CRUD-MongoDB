@@ -1,0 +1,61 @@
+<% extend('template/page') %>
+
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <h4 class="text-center mb-3">
+          <%= process.env.APP_NAME %> <a href="/create" class="float-end btn btn-primary">Create</a>
+        </h4>
+        <% if(action !=null){ %>
+          <div id='action' class="alert alert-success">
+            <%- action %>
+              <script>
+                setTimeout(() => {
+                  action.style.display = 'none';
+                  action.innerHTML = '';
+                }, 2500)
+              </script>
+          </div>
+
+          <% } %>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>firstname</th>
+                    <th>lastname</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(result && result.length>= 1){
+                    result.forEach((val,key)=>{ %>
+                    <tr>
+                      <td>
+                        <%= val['id'] %>
+                      </td>
+                      <td>
+                        <%= val['firstname'] %>
+                      </td>
+                      <td>
+                        <%= val['lastname'] %>
+                      </td>
+                      <td>
+                        <a href="/update/<%= val['id'] %>" class="btn btn-warning">Update</a>
+                        <a href="/delete/<%= val['id'] %>" class="btn btn-danger">Delete</a>
+                      </td>
+                    </tr>
+                    <% })}else{ %>
+                      <tr>
+                        <td class="text-center text-info" colspan="4">not found</td>
+                      </tr>
+                      <% } %>
+                </tbody>
+              </table>
+            </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+  </div>
